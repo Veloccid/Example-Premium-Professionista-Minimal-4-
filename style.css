@@ -1,0 +1,463 @@
+/* --- VARIABILI GLOBALI E RESET --- */
+/* Qui definiamo i colori base per poterli cambiare facilmente in un colpo solo */
+:root {
+    --color-bg: #ffffff; /* Sfondo generale bianco */
+    --color-text: #1a1a1a; /* Testo generale quasi nero */
+    --color-dark: #0a0a0a; /* Sfondo per le sezioni scure */
+    --color-light: #ffffff; /* Colore per i testi sulle sezioni scure */
+    --font-main: 'Montserrat', sans-serif;
+}
+
+/* Rimuove margini di default del browser */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.8; /* Aumenta lo spazio tra le righe di testo */
+    overflow-x: hidden; /* Evita scorrimenti orizzontali su mobile */
+}
+
+/* Limita la larghezza massima del sito a 1200px e lo centra */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+/* Dà un respiro enorme (150px) sopra e sotto ad ogni sezione */
+.section { padding: 150px 0; }
+/* Classe utility per invertire i colori in una sezione */
+.bg-dark { background-color: var(--color-dark); color: var(--color-light); }
+
+/* Stile per i titoli di sezione (es. "Experience", "Gallery") */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Aumenta lo spazio tra le lettere */
+    margin-bottom: 80px;
+    text-align: center;
+}
+.dark-title { color: var(--color-dark); }
+
+/* --- BOTTONI E HERO (Video) --- */
+.btn {
+    display: inline-block; padding: 16px 45px; background-color: transparent;
+    color: var(--color-text); text-decoration: none; border: 1px solid var(--color-text);
+    font-weight: 400; text-transform: uppercase; letter-spacing: 2px;
+    font-size: 0.9rem; transition: all 0.4s ease; cursor: pointer;
+}
+.btn:hover { background-color: var(--color-text); color: var(--color-bg); }
+.btn-light { border-color: var(--color-light); color: var(--color-light); }
+.btn-light:hover { background-color: var(--color-light); color: var(--color-dark); }
+
+.hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+.video-background-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+/* Il video è alto il 120% per permettere l'effetto Parallax senza mostrare bordi neri */
+.hero-video { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; left: 0; }
+.video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1; }
+.hero-content { position: relative; z-index: 2; color: var(--color-light); }
+.hero-title { font-size: 5vw; font-weight: 300; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
+.hero-subtitle { font-size: 1.2rem; font-weight: 200; margin-bottom: 50px; letter-spacing: 2px; }
+
+/* --- SEZIONE CHI SONO (LAYOUT DIVISO) --- */
+/* Flexbox permette di affiancare la colonna testo e la colonna immagine */
+.about-split {
+    display: flex;
+    align-items: center; /* Allinea gli elementi al centro verticalmente */
+    justify-content: space-between; /* Spinge gli elementi ai lati opposti */
+    gap: 80px; /* Crea un grande spazio vuoto al centro tra testo e foto */
+}
+
+/* La colonna di testo prende il 55% della larghezza */
+.about-text-left { width: 55%; }
+/* L'immagine prende il 40% della larghezza */
+.about-image-right { width: 40%; }
+
+/* Stile dell'immagine del fisioterapista */
+.physio-img {
+    width: 100%; /* Si adatta alla larghezza del div genitore (il 40% sopra) */
+    height: auto;
+    object-fit: cover;
+    filter: grayscale(100%); /* Toglie i colori e la fa in bianco e nero */
+}
+
+/* Il titolino con il nome */
+.name-title {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* La citazione enorme in stile Ulises Badio */
+.quote-big {
+    font-size: 2.5rem; /* Molto grande */
+    font-weight: 200; /* Font sottilissimo per dare eleganza */
+    line-height: 1.3; /* Spazio tra le righe ridotto per testi così grandi */
+    margin-bottom: 40px;
+    font-style: italic; /* Corsivo */
+    color: var(--color-dark);
+}
+
+.desc { font-size: 1.05rem; color: #555; font-weight: 300; }
+
+/* --- SEZIONE EXPERIENCE (TIMELINE) --- */
+/* La timeline è una colonna flessibile, larga al massimo 900px e centrata */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Ogni singolo elemento della timeline (Anno + Testo) */
+/* --- SEZIONE EXPERIENCE (TIMELINE INTERATTIVA) --- */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.timeline-item {
+    position: relative; /* Fondamentale per posizionare il pallino e la linea */
+    display: flex;
+    gap: 60px;
+    padding: 60px 0;
+    padding-left: 40px; /* Facciamo spazio a sinistra per la linea grafica */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Linea quasi invisibile */
+    transition: all 0.5s ease; /* Prepara l'animazione di spostamento e trasparenza */
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+/* LA LINEA GRAFICA VERTICALE */
+/* Usiamo ::before per "disegnare" una linea in CSS senza sporcare l'HTML */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 4px; /* Posizione a sinistra */
+    top: 60px; /* Parte in concomitanza con il padding */
+    bottom: -60px; /* Scende fino all'elemento successivo */
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2); /* Linea bianca semi-trasparente */
+}
+/* All'ultimo elemento togliamo la linea che scende giù nel vuoto */
+.timeline-item:last-child::before { display: none; }
+
+/* IL PALLINO GRAFICO */
+/* Usiamo ::after per "disegnare" il pallino sulla linea */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: -1px; /* Centrato rispetto alla linea */
+    top: 75px; /* Allineato all'inizio del testo */
+    width: 12px;
+    height: 12px;
+    border-radius: 50%; /* Lo rende rotondo */
+    background-color: var(--color-dark); /* Dentro è nero */
+    border: 2px solid var(--color-light); /* Bordo bianco */
+    transition: all 0.4s ease; /* Animazione morbida per il glow */
+}
+
+.timeline-year {
+    font-size: 4rem;
+    font-weight: 200;
+    line-height: 1;
+    color: var(--color-light);
+    width: 150px;
+    flex-shrink: 0;
+    transition: color 0.4s ease;
+}
+
+.timeline-text h4 { font-size: 1.5rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 1px; }
+.timeline-text p { color: #999; font-weight: 300; }
+
+/* --- EFFETTI HOVER EXPERIENCE (MAGIA INTERATTIVA) --- */
+/* --- EFFETTI HOVER EXPERIENCE (Solo per chi ha il mouse) --- */
+/* Questa riga dice: "Applica questi effetti solo su dispositivi che hanno un puntatore vero (PC/Mac)" */
+@media (hover: hover) {
+    .timeline:hover .timeline-item {
+        opacity: 0.3;
+    }
+    .timeline:hover .timeline-item:hover {
+        opacity: 1;
+        transform: translateX(15px);
+    }
+    .timeline-item:hover::after {
+        background-color: var(--color-light);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* --- EFFETTO PER IPHONE / MOBILE (Basato sullo Scroll) --- */
+/* Quando l'elemento diventa visibile grazie al JavaScript, attiviamo una versione light dell'effetto */
+.timeline-item.visible::after {
+    background-color: var(--color-light);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Anche le card della formazione su iPhone devono essere pulite */
+@media (max-width: 900px) {
+    .edu-card {
+        padding: 30px 20px; /* Più compatte su schermo piccolo */
+        border-left: 3px solid var(--color-text); /* Un dettaglio colorato a sinistra per farle risaltare */
+    }
+    /* Riduciamo lo spostamento della timeline su iPhone per non far uscire il testo dallo schermo */
+    .timeline-item.visible {
+        transform: translateX(5px);
+    }
+}
+/* --- NUOVA SEZIONE: FORMAZIONE (EDUCATION) --- */
+.education-grid {
+    display: grid;
+    /* Crea colonne dinamiche: minimo 300px, si espandono se c'è spazio */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; /* Spazio tra le card */
+}
+
+.edu-card {
+    padding: 50px 40px;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Bordo grigio chiarissimo */
+    background-color: var(--color-bg); /* Sfondo bianco */
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Transizione ultra-fluida */
+}
+
+/* Animazione di sollevamento (Lift effect) quando ci passi sopra */
+.edu-card:hover {
+    transform: translateY(-10px); /* Sale di 10 pixel */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); /* Crea un'ombra morbida sotto */
+    border-color: var(--color-text); /* Il bordo diventa nero per dare risalto */
+}
+
+.edu-year {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #888;
+    margin-bottom: 20px;
+    display: block; /* Fa andare a capo il testo successivo */
+    letter-spacing: 2px;
+}
+
+.edu-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.edu-desc {
+    color: #555;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+/* --- SEZIONE GALLERY --- */
+/* Usiamo CSS Grid per creare un mosaico di foto perfetto */
+.gallery-grid {
+    display: grid;
+    /* Questa è una regola magica:
+      Crea tante colonne quante ne entrano (auto-fit).
+      Ogni colonna deve essere grande almeno 350px, 
+      ma se c'è spazio in più, si allarga per occuparlo tutto (1fr).
+    */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px; /* Spazio vuoto tra le fotografie */
+}
+
+/* Contenitore della singola foto */
+.gallery-item {
+    width: 100%;
+    height: 400px; /* Tutte le foto saranno alte uguali, 400px */
+    /* FONDAMENTALE PER LO ZOOM: overflow: hidden "taglia via" i pezzi di foto che escono dai bordi durante l'ingrandimento */
+    overflow: hidden; 
+}
+
+/* L'immagine vera e propria dentro al contenitore */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Taglia l'immagine per farla rientrare nei 400px senza schiacciarla */
+    display: block;
+    /* Prepara l'animazione: qualsiasi cambiamento di trasformazione durerà 0.8 secondi in modo fluido */
+    transition: transform 0.8s ease; 
+}
+
+/* Effetto Zoom: si attiva quando l'utente posiziona il cursore (:hover) sull'elemento */
+.gallery-item:hover img {
+    /* Scale(1.08) ingrandisce la foto dell'8%, creando l'effetto premium dei siti d'autore */
+    transform: scale(1.08); 
+}
+
+/* --- CTA FINALE E FOOTER --- */
+.cta-section { text-align: center; }
+.cta-title { font-size: 3.5rem; font-weight: 200; margin-bottom: 20px; }
+.footer { text-align: center; padding: 40px 0; font-size: 0.8rem; letter-spacing: 1px; border-top: 1px solid #222; }
+
+/* --- RESPONSIVE DESIGN (Per Smartphone e Tablet sotto i 900px) --- */
+@media (max-width: 900px) {
+    .hero-title { font-size: 3rem; }
+    
+    /* Layout diviso: toglie l'affiancamento e incolonna testo sopra, foto sotto */
+    .about-split { flex-direction: column; gap: 40px; }
+    /* Entrambi gli elementi prendono il 100% dello schermo */
+    .about-text-left, .about-image-right { width: 100%; }
+    
+    /* Timeline: Incolonna l'anno sopra e la descrizione sotto invece che a fianco */
+    .timeline-item { flex-direction: column; gap: 20px; padding: 40px 0; }
+    /* L'anno non ha più bisogno di una larghezza fissa su smartphone */
+    .timeline-year { font-size: 3rem; width: auto; }
+}
+
+/* --- ANIMAZIONI FADE-IN ALLO SCROLL --- */
+/* Stato iniziale (invisibile e spostato in basso) */
+.fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Stato finale (Aggiunto dal file JavaScript quando l'elemento entra nello schermo) */
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+/* --- NAVIGAZIONE PREMIUM --- */
+.navbar {
+    position: fixed; /* Rimane "appiccicato" in alto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Sta sopra a tutto (video, foto, etc.) */
+    padding: 20px 0;
+    transition: transform 0.4s ease, background-color 0.4s ease; /* Animazione fluida */
+    background-color: transparent; /* Parte trasparente sopra il video */
+}
+
+/* Classe che aggiungeremo con JS quando l'utente scorre verso l'alto */
+.navbar.nav-scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* Diventa bianco quasi opaco */
+    backdrop-filter: blur(10px); /* Effetto vetro satinato tipico di Apple/iPhone */
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Nasconde il menu quando scorri in basso */
+.navbar.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: var(--color-light); /* Parte bianco per vedersi sul video */
+    transition: color 0.4s ease;
+}
+
+/* Cambia il colore del logo quando il menu diventa bianco */
+.nav-scrolled .nav-logo { color: var(--color-dark); }
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-light);
+    margin-left: 30px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.4s ease;
+}
+
+.nav-scrolled .nav-links a { color: var(--color-dark); }
+
+/* Il bottone Contatti nel menu */
+.nav-btn {
+    border: 1px solid var(--color-light);
+    padding: 8px 20px !important;
+    transition: all 0.4s ease !important;
+}
+
+.nav-scrolled .nav-btn {
+    border-color: var(--color-dark);
+}
+
+/* Nascondiamo i link secondari su iPhone per non affollare il logo */
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* In un secondo momento potremmo fare un menu a "hamburger" */
+}
+
+/* --- NAVIGAZIONE PREMIUM --- */
+.navbar {
+    position: fixed; /* Rimane "appiccicato" in alto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Sta sopra a tutto (video, foto, etc.) */
+    padding: 20px 0;
+    transition: transform 0.4s ease, background-color 0.4s ease; /* Animazione fluida */
+    background-color: transparent; /* Parte trasparente sopra il video */
+}
+
+/* Classe che aggiungeremo con JS quando l'utente scorre verso l'alto */
+.navbar.nav-scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* Diventa bianco quasi opaco */
+    backdrop-filter: blur(10px); /* Effetto vetro satinato tipico di Apple/iPhone */
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Nasconde il menu quando scorri in basso */
+.navbar.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: var(--color-light); /* Parte bianco per vedersi sul video */
+    transition: color 0.4s ease;
+}
+
+/* Cambia il colore del logo quando il menu diventa bianco */
+.nav-scrolled .nav-logo { color: var(--color-dark); }
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-light);
+    margin-left: 30px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.4s ease;
+}
+
+.nav-scrolled .nav-links a { color: var(--color-dark); }
+
+/* Il bottone Contatti nel menu */
+.nav-btn {
+    border: 1px solid var(--color-light);
+    padding: 8px 20px !important;
+    transition: all 0.4s ease !important;
+}
+
+.nav-scrolled .nav-btn {
+    border-color: var(--color-dark);
+}
+
+/* Nascondiamo i link secondari su iPhone per non affollare il logo */
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* In un secondo momento potremmo fare un menu a "hamburger" */
+}
